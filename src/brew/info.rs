@@ -4,34 +4,7 @@ use crate::{brew, Package};
 
 pub fn info(name: &str) -> Result<Package> {
     let out = brew(format!("info {name} --json=v2").as_str())?;
-    let mut pkg: Package = serde_json::from_str(out.to_string().as_str())?;
-
-    // Clone values first before modifying
-    let (name, full_name, tap, desc, homepage) = if pkg.is_cask() {
-        let p = pkg.cask();
-        (
-            p.token.clone(),
-            p.full_token.clone(),
-            p.tap.clone(),
-            p.desc.clone(),
-            p.homepage.clone(),
-        )
-    } else {
-        let p = pkg.formula();
-        (
-            p.name.clone(),
-            p.full_name.clone(),
-            p.tap.clone(),
-            p.desc.clone(),
-            p.homepage.clone(),
-        )
-    };
-
-    pkg.name = name;
-    pkg.full_name = full_name;
-    pkg.tap = tap;
-    pkg.desc = desc;
-    pkg.homepage = homepage;
+    let pkg = Package::from(&out)?;
     Ok(pkg)
 }
 

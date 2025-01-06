@@ -22,6 +22,38 @@ pub struct Package {
 }
 
 impl Package {
+    /// 通过 `json` 字符串来新建
+    pub fn from(json_str: &str) -> anyhow::Result<Self> {
+        let mut pkg: Package = serde_json::from_str(json_str)?;
+        // Clone values first before modifying
+        let (name, full_name, tap, desc, homepage) = if pkg.is_cask() {
+            let p = pkg.cask();
+            (
+                p.token.clone(),
+                p.full_token.clone(),
+                p.tap.clone(),
+                p.desc.clone(),
+                p.homepage.clone(),
+            )
+        } else {
+            let p = pkg.formula();
+            (
+                p.name.clone(),
+                p.full_name.clone(),
+                p.tap.clone(),
+                p.desc.clone(),
+                p.homepage.clone(),
+            )
+        };
+
+        pkg.name = name;
+        pkg.full_name = full_name;
+        pkg.tap = tap;
+        pkg.desc = desc;
+        pkg.homepage = homepage;
+
+        Ok(pkg)
+    }
     pub fn is_cask(&self) -> bool {
         if !self.casks.is_empty() { true } else { false }
     }
