@@ -14,7 +14,7 @@ mod tests {
     #[test]
     fn test_info() {
         if let Ok(pkg) = info("rust") {
-            let f= pkg.formula();
+            let f = pkg.formula();
             assert_eq!(pkg.name, "rust");
             assert_eq!(pkg.full_name, "rust");
             assert_eq!(pkg.tap, "homebrew/care");
@@ -29,7 +29,7 @@ mod tests {
             assert_eq!(f.homepage, "https://www.rust-lang.org/");
         }
         if let Ok(pkg) = info("kitty") {
-            let f= pkg.cask();
+            let f = pkg.cask();
             assert_eq!(pkg.name, "kitty");
             assert_eq!(pkg.full_name, "kitty");
             assert_eq!(pkg.tap, "homebrew/cask");
@@ -42,7 +42,10 @@ mod tests {
             assert_eq!(f.name, ["kitty"]);
             assert_eq!(f.desc, "Safe, concurrent, practical language");
             assert_eq!(f.homepage, "https://www.rust-lang.org/");
-            let url = format!("https://github.com/kovidgoyal/kitty/releases/download/v{}/kitty-{}.dmg", &f.version, &f.version);
+            let url = format!(
+                "https://github.com/kovidgoyal/kitty/releases/download/v{}/kitty-{}.dmg",
+                &f.version, &f.version
+            );
             assert_eq!(f.url, url);
         }
 
@@ -54,6 +57,17 @@ mod tests {
                 format!("Error: No available formula with the name \"{}\".", name)
             );
         }
+
+        for name in ["gotop"] {
+            if let Ok(pkg) = info(name) {
+                let f = pkg.formula();
+                assert_eq!(pkg.name, name);
+                assert_eq!(pkg.name, f.name);
+                assert_eq!(pkg.full_name, f.full_name);
+                assert_eq!(pkg.tap, f.tap);
+                assert_eq!(pkg.homepage, f.homepage);
+                assert_eq!(pkg.desc, f.desc);
+            }
+        }
     }
 }
-
