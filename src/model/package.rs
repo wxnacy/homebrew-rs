@@ -46,6 +46,8 @@ pub struct Package {
 impl Package {
     /// 通过 `json` 字符串来新建结构体
     ///
+    /// 仅适用查询单个包时使用，如果反序列多个请用 [`homebrew::Package::from_all`]
+    ///
     /// Examples
     ///
     /// ```
@@ -66,10 +68,7 @@ impl Package {
     /// }
     /// ```
     pub fn from(json_str: &str) -> anyhow::Result<Self> {
-        let mut pkg: Package = serde_json::from_str(json_str)?;
-        // 给 value 赋值
-        let value: HashMap<String, Value> = serde_json::from_str(json_str)?;
-        pkg.value = value;
+        let mut pkg: Package = Self::from_all(json_str)?;
         // 给 package 赋值基本属性
         let (name, full_name, tap, desc, homepage) = if pkg.is_cask() {
             let p = pkg.cask();
@@ -98,6 +97,35 @@ impl Package {
         pkg.desc = desc;
         pkg.homepage = homepage;
 
+        Ok(pkg)
+    }
+
+    /// 通过 `json` 字符串来新建结构体
+    ///
+    /// 仅适用查询多个包时使用，如果反序列单个请用 [`homebrew::Package::from`]
+    ///
+    /// Examples
+    ///
+    /// ```
+    /// extern crate homebrew as brew;
+    ///
+    /// use std::fs;
+    ///
+    /// use brew::Package;
+    ///
+    /// fn main() {
+    ///     let json_str = fs::read_to_string("examples/data/all.json").unwrap();
+    ///     let pkg = Package::from_all(&json_str).unwrap();
+    ///
+    ///     assert_eq!(pkg.formulae().len(), 2);
+    ///     assert_eq!(pkg.casks().len(), 2);
+    /// }
+    /// ```
+    pub fn from_all(json_str: &str) -> anyhow::Result<Self> {
+        let mut pkg: Package = serde_json::from_str(json_str)?;
+        // 给 value 赋值
+        let value: HashMap<String, Value> = serde_json::from_str(json_str)?;
+        pkg.value = value;
         Ok(pkg)
     }
 
