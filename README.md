@@ -1,6 +1,6 @@
 # Homebrew Rust Package
 
-`[Homebrew](https://brew.sh/)` 在 `Rust` 中的封装
+[Homebrew](https://brew.sh/) 在 [Rust](https://www.rust-lang.org/) 中的封装
 
 ## 使用
 
@@ -24,14 +24,18 @@ extern crate homebrew as brew;
 ///       "desc": "Internet file retriever",
 ///       "license": "GPL-3.0-or-later",
 ///       "homepage": "https://www.gnu.org/software/wget/",
-///     ...
+///
+///       ...
 ///     }
 ///   ]
 /// }
+/// package name: wget
+/// package is_installed: true
 fn main() {
-    let pkg = brew::info("wget").expect("Failed run brew info");
-    let json = serde_json::to_string_pretty(&pkg).expect("Failed to string pretty");
-    println!("{json}")
+    let pkg = brew::info("wget").unwrap();
+    let json = serde_json::to_string_pretty(&pkg).unwrap();
+    println!("{json}");
+    println!("package name: {}", pkg.name);
+    println!("package is_installed: {}", pkg.is_installed());
 }
-
 ```
