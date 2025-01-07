@@ -35,3 +35,24 @@ pub fn info(name: &str) -> Result<Package> {
     let pkg = Package::from(&out)?;
     Ok(pkg)
 }
+
+/// 执行 `brew info --eval-all --json=v2` 命令
+/// 获取全部包(包括 `formula` 和 `cask`，下载和没下载的)
+///
+/// Examples
+///
+/// ```ignore
+/// extern crate homebrew as brew;
+///
+/// fn main() {
+///     let pkg = brew::info_all().unwrap();
+///
+///     assert!(pkg.formulae().len() > 7000);
+///     assert!(pkg.casks().len() > 7000);
+/// }
+/// ```
+pub fn info_all() -> Result<Package> {
+    let out = brew("info --eval-all --json=v2")?;
+    let pkg = Package::from_all(&out)?;
+    Ok(pkg)
+}
