@@ -1,6 +1,7 @@
 use serde::{Serialize, Deserialize};
 use std::{fmt};
 
+/// `Cask` 包的结构体
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct Cask {
     pub token: String,

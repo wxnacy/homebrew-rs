@@ -38,6 +38,7 @@ pub fn info(name: &str) -> Result<Package> {
 }
 
 /// 执行 `brew info --eval-all --json=v2` 命令
+///
 /// 获取全部包(包括 `formula` 和 `cask`，下载和没下载的)
 ///
 /// Examples

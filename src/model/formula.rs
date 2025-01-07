@@ -1,5 +1,6 @@
 use serde::{Serialize, Deserialize};
 
+/// `Formula` 包的结构体
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct Formula {
     pub name: String,
