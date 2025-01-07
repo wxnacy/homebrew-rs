@@ -2,6 +2,8 @@ use anyhow::Result;
 
 use crate::{brew, Package};
 
+/// 执行 `brew info {name} --json=v2` 命令
+/// 返回格式化包对象
 pub fn info(name: &str) -> Result<Package> {
     let out = brew(format!("info {name} --json=v2").as_str())?;
     let pkg = Package::from(&out)?;
@@ -11,6 +13,7 @@ pub fn info(name: &str) -> Result<Package> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
     #[test]
     fn test_info() {
         if let Ok(pkg) = info("rust") {
@@ -40,7 +43,7 @@ mod tests {
             assert_eq!(f.full_token, "kitty");
             assert_eq!(f.tap, "homebrew/cask");
             assert_eq!(f.name, ["kitty"]);
-            assert_eq!(f.desc, "Safe, concurrent, practical language");
+            assert_eq!(f.desc, Some("Safe, concurrent, practical language".to_string()));
             assert_eq!(f.homepage, "https://www.rust-lang.org/");
             let url = format!(
                 "https://github.com/kovidgoyal/kitty/releases/download/v{}/kitty-{}.dmg",
@@ -70,4 +73,19 @@ mod tests {
             }
         }
     }
+
+    #[test]
+    fn test_info_one() {
+        for name in ["a2ps", "aamath", "abi-compliance-checker"] {
+            let pkg = info(name).expect("Failed info");
+            let f = pkg.formula();
+            assert_eq!(pkg.name, name);
+            assert_eq!(pkg.name, f.name);
+            assert_eq!(pkg.full_name, f.full_name);
+            assert_eq!(pkg.tap, f.tap);
+            assert_eq!(pkg.homepage, f.homepage);
+            assert_eq!(pkg.desc, f.desc);
+        }
+    }
+
 }
