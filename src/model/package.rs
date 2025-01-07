@@ -69,8 +69,6 @@ impl Package {
 
 #[cfg(test)]
 mod tests {
-    use crate::brew::brew;
-
     use super::Package;
 
     const JSON_DATA: &str = r#"

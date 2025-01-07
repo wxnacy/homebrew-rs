@@ -216,7 +216,7 @@ mod tests {
     use crate::brew::brew;
 
     use super::*;
-    use serde_json::{self, Value, Error};
+    use serde_json::{self, Value};
 
     const JSON_DATA: &str = r#"
         {
