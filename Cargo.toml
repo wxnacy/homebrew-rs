@@ -2,8 +2,10 @@
 name = "homebrew"
 version = "0.1.0"
 edition = "2021"
-license = "MIT"
+license = "MIT OR Apache-2.0"
 authors = ["wxnacy@gmail.com"]
+description = "A rust wrapper around the homebrew package"
+repository = "https://github.com/wxnacy/homebrew-rs"
 
 [dependencies]
 tabled = "0.17.0"
