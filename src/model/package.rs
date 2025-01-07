@@ -25,10 +25,10 @@ impl Package {
     /// 通过 `json` 字符串来新建
     pub fn from(json_str: &str) -> anyhow::Result<Self> {
         let mut pkg: Package = serde_json::from_str(json_str)?;
-        // Clone values first before modifying
+        // 给 package 赋值基本属性
         let (name, full_name, tap, desc, homepage) = if pkg.is_cask() {
             let p = pkg.cask();
-            let desc = p.desc.clone().unwrap_or_else(String::new);
+            let desc = p.desc.clone().unwrap_or_default();
             (
                 p.token.clone(),
                 p.full_token.clone(),
@@ -56,7 +56,7 @@ impl Package {
         Ok(pkg)
     }
     pub fn is_cask(&self) -> bool {
-        if !self.casks.is_empty() { true } else { false }
+        !self.casks.is_empty()
     }
     pub fn formula(&self) -> &Formula {
         &self.formula[0]
