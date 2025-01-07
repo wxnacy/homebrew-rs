@@ -130,8 +130,14 @@ impl Package {
     pub fn is_cask(&self) -> bool {
         !self.casks.is_empty()
     }
+    pub fn formulae(&self) -> &Vec<Formula> {
+        &self.formulae
+    }
     pub fn formula(&self) -> &Formula {
         &self.formulae[0]
+    }
+    pub fn casks(&self) -> &Vec<Cask> {
+        &self.casks
     }
     pub fn cask(&self) -> &Cask {
         &self.casks[0]
