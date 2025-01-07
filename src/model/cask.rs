@@ -1,5 +1,5 @@
 use serde::{Serialize, Deserialize};
-use std::{fmt};
+use std::fmt;
 
 /// `Cask` 包的结构体
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
@@ -234,130 +234,34 @@ impl fmt::Display for RubySourceChecksum {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::{collections::HashMap, fs::{self, File}, path::PathBuf};
-    use crate::brew::brew;
+    use std::{collections::HashMap, fs, path::PathBuf};
+    use crate::info_all;
     use serde_json::{self, Value};
-
-    const JSON_DATA: &str = r#"
-    {
-        "token": "kitty",
-        "full_token": "kitty",
-        "old_tokens": [],
-        "tap": "homebrew/cask",
-        "name": ["kitty"],
-        "desc": "GPU-based terminal emulator",
-        "homepage": "",
-        "url": "",
-        "url_specs": {},
-        "version": "0.38.1",
-        "installed": "0.38.1",
-        "installed_time": 1735519389,
-        "bundle_version": "0.38.1",
-        "bundle_short_version": "0.38.1",
-        "outdated": false,
-        "sha256": "2971db2c2220a9f353efcc1d58d8b88462dc5a2a992adea9c051bf6e54c90e52",
-        "artifacts": [
-            {
-                "preflight": null
-            },
-            {
-                "app": ["kitty.app"]
-            },
-            {
-                "binary": [
-                    {
-                        "path": "/opt/homebrew/Caskroom/kitty/0.38.1/kitty.wrapper.sh",
-                        "target": "kitty"
-                    }
-                ]
-            },
-            {
-                "binary": [
-                    {
-                        "path": "/opt/homebrew/Caskroom/kitty/0.38.1/kitten.wrapper.sh",
-                        "target": "kitten"
-                    }
-                ]
-            },
-            {
-                "zap": {
-                    "trash": [
-                        "~/.config/kitty",
-                        "~/Library/Caches/kitty",
-                        "~/Library/Preferences/kitty",
-                        "~/Library/Preferences/net.kovidgoyal.kitty.plist",
-                        "~/Library/Saved Application State/net.kovidgoyal.kitty.savedState"
-                    ]
-                }
-            }
-        ],
-        "caveats": null,
-        "depends_on": {
-            "macos": {
-                ">=": ["11"]
-            }
-        },
-        "conflicts_with": {
-            "cask": ["kitty@nightly"]
-        },
-        "container": null,
-        "auto_updates": null,
-        "deprecated": false,
-        "deprecation_date": null,
-        "deprecation_reason": null,
-        "deprecation_replacement": null,
-        "disabled": false,
-        "disable_date": null,
-        "disable_reason": null,
-        "disable_replacement": null,
-        "tap_git_head": "caacd9e842f1e843d1b31c629652c6dc0005e4bd",
-        "languages": [],
-        "ruby_source_path": "Casks/k/kitty.rb",
-        "ruby_source_checksum": {
-            "sha256": "1107b16dc344bace347af11c9b983456f0634cb53103beddbcda6413a10cce4a"
-        }
-    }
-    "#;
-
-    #[test]
-    #[ignore]
-    fn test_json_to_cask() {
-        let package: Cask = serde_json::from_str(JSON_DATA).expect("Failed to parse JSON");
-
-        // 进行一些断言以验证解析结果
-        assert_eq!(package.token, "kitty");
-        assert_eq!(package.version, "0.38.1");
-        assert!(package.old_tokens.is_empty());
-        assert_eq!(package.artifacts.len(), 5);
-    }
 
     #[test]
     fn test_all_to_cask() {
         let tempfile = PathBuf::from("target/package.json");
         if !tempfile.exists() {
-            let out = brew::brew("info --eval-all --json=v2").expect("Failed get info all");
-            let file = File::create("package.json").expect("Failed to create file");
-            let value: HashMap<String, Value> = serde_json::from_str(&out).expect("");
-            let writer = std::io::BufWriter::new(file);
-            serde_json::to_writer(writer, &value).expect("Failed to write package.json");
+            let pkg = info_all().unwrap();
+            pkg.to_file(&tempfile).unwrap();
         }
 
-        let out = fs::read_to_string(&tempfile).expect("Failed read package.json");
-        let all_packages: HashMap<String, Value> = serde_json::from_str(&out).expect("Failed parse json string");
+        let out = fs::read_to_string(&tempfile).unwrap();
+        let all_packages: HashMap<String, Value> = serde_json::from_str(&out).unwrap();
 
         for (key, value) in &all_packages {
             println!("{key}");
             if key == "formulae" {
                 continue;
             }
-            let packages: Vec<Value> = value.as_array().expect("Faield to as array").to_vec();
+            let packages: Vec<Value> = value.as_array().unwrap().to_vec();
             for val in &packages {
                 let name = &val["token"];
-                let text = serde_json::to_string_pretty(val).expect("Faield to string");
                 let pkg_m = serde_json::from_value::<Cask>(val.clone()).map_err(|e| anyhow::Error::new(e));
                 match pkg_m{
                     Ok(pkg) => assert_eq!(&pkg.token, name),
                     Err(e) => {
+                        let text = serde_json::to_string_pretty(val).unwrap();
                         fs::write("target/cask.json", &text).expect("Failed write");
                         println!("{}\n{}", text, name);
                         panic!("{e}")
