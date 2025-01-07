@@ -3,6 +3,7 @@ use anyhow::Result;
 use crate::{brew, Package};
 
 /// 执行 `brew info {name} --json=v2` 命令
+///
 /// 返回格式化包对象
 ///
 /// Examples
