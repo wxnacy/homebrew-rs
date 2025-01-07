@@ -4,7 +4,7 @@ use anyhow::{Ok, Result};
 
 
 const BREW_BIN_ARM64: &str = "/opt/homebrew/bin/brew";
-const BREW_BIN_X86_64: &str = "/opt/homebrew/bin/brew";
+const BREW_BIN_X86_64: &str = "/usr/local/bin/brew";
 
 pub fn get_brew_bin() -> Result<String>{
     let output = Command::new("uname")
