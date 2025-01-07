@@ -11,7 +11,7 @@ pub struct Package {
     #[serde(rename = "casks")]
     casks: Vec<Cask>,
     #[serde(rename = "formulae")]
-    formula: Vec<Formula>,
+    formulae: Vec<Formula>,
 
     /// `brew info [name] --json=v2` 命令原始数据
     #[serde(skip)]
@@ -130,7 +130,7 @@ impl Package {
         !self.casks.is_empty()
     }
     pub fn formula(&self) -> &Formula {
-        &self.formula[0]
+        &self.formulae[0]
     }
     pub fn cask(&self) -> &Cask {
         &self.casks[0]
