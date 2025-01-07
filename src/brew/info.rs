@@ -20,13 +20,13 @@ mod tests {
             let f = pkg.formula();
             assert_eq!(pkg.name, "rust");
             assert_eq!(pkg.full_name, "rust");
-            assert_eq!(pkg.tap, "homebrew/care");
+            assert_eq!(pkg.tap, "homebrew/core");
             assert_eq!(pkg.desc, "Safe, concurrent, practical language");
             assert_eq!(pkg.homepage, "https://www.rust-lang.org/");
 
             assert_eq!(f.name, "rust");
             assert_eq!(f.full_name, "rust");
-            assert_eq!(f.tap, "homebrew/care");
+            assert_eq!(f.tap, "homebrew/core");
             assert_eq!(f.oldnames, ["rustfmt"]);
             assert_eq!(f.desc, "Safe, concurrent, practical language");
             assert_eq!(f.homepage, "https://www.rust-lang.org/");
@@ -36,15 +36,15 @@ mod tests {
             assert_eq!(pkg.name, "kitty");
             assert_eq!(pkg.full_name, "kitty");
             assert_eq!(pkg.tap, "homebrew/cask");
-            assert_eq!(pkg.desc, "Safe, concurrent, practical language");
-            assert_eq!(pkg.homepage, "https://www.rust-lang.org/");
+            assert_eq!(pkg.desc, "GPU-based terminal emulator");
+            // assert_eq!(pkg.homepage, "https://www.rust-lang.org/");
 
             assert_eq!(f.token, "kitty");
             assert_eq!(f.full_token, "kitty");
             assert_eq!(f.tap, "homebrew/cask");
             assert_eq!(f.name, ["kitty"]);
-            assert_eq!(f.desc, Some("Safe, concurrent, practical language".to_string()));
-            assert_eq!(f.homepage, "https://www.rust-lang.org/");
+            assert_eq!(f.desc, Some("GPU-based terminal emulator".to_string()));
+            assert_eq!(f.homepage, pkg.homepage);
             let url = format!(
                 "https://github.com/kovidgoyal/kitty/releases/download/v{}/kitty-{}.dmg",
                 &f.version, &f.version

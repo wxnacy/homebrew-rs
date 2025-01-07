@@ -320,7 +320,6 @@ mod tests {
         assert_eq!(package.version, "0.38.1");
         assert!(package.old_tokens.is_empty());
         assert_eq!(package.artifacts.len(), 5);
-        // assert_eq!(package.depends_on.macos.version_gte[0], "11");
     }
 
     #[test]
