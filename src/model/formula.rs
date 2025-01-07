@@ -52,6 +52,13 @@ pub struct Formula {
     pub head_dependencies: Option<HeadDependencies>,
 }
 
+impl Formula {
+    /// 判断 `Formula` 包是否已安装
+    pub fn is_installed(&self) -> bool {
+        !self.installed.is_empty()
+    }
+}
+
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct Options {
     option: Option<String>,

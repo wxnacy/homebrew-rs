@@ -160,6 +160,33 @@ impl Package {
     pub fn is_cask(&self) -> bool {
         !self.casks.is_empty()
     }
+
+    /// 判断包是否安装
+    ///
+    /// *获取单个包时可以使用*
+    ///
+    /// 可以在使用 [`crate::info`] 方法获取 `Package` 后调用
+    ///
+    /// Examples
+    ///
+    /// ```ignore
+    /// extern crate homebrew as brew;
+    ///
+    /// fn main() {
+    ///     let pkg = brew::info("rust").unwrap();
+    ///     assert!(pkg.is_installed());
+    ///
+    ///     let pkg = brew::info("kitty").unwrap();
+    ///     assert!(pkg.is_installed());
+    /// }
+    /// ```
+    pub fn is_installed(&self) -> bool {
+        if self.is_cask() {
+            self.cask().is_installed()
+        } else {
+            self.formula().is_installed()
+        }
+    }
     pub fn formulae(&self) -> &Vec<Formula> {
         &self.formulae
     }

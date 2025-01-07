@@ -39,6 +39,13 @@ pub struct Cask {
     pub ruby_source_checksum: Option<RubySourceChecksum>,
 }
 
+impl Cask {
+    /// 判断 `Cask` 包是否已经安装
+    pub fn is_installed(&self) -> bool {
+        self.installed.is_some()
+    }
+}
+
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct Container {
     #[serde(rename = "type")]
