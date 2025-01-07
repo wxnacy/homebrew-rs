@@ -1,0 +1,100 @@
+{
+  "formulae": [
+
+  ],
+  "casks": [
+    {
+      "token": "kitty",
+      "full_token": "kitty",
+      "old_tokens": [
+
+      ],
+      "tap": "homebrew/cask",
+      "name": [
+        "kitty"
+      ],
+      "desc": "GPU-based terminal emulator",
+      "homepage": "https://github.com/kovidgoyal/kitty",
+      "url": "https://github.com/kovidgoyal/kitty/releases/download/v0.38.1/kitty-0.38.1.dmg",
+      "url_specs": {
+      },
+      "version": "0.38.1",
+      "installed": "0.38.1",
+      "installed_time": 1735519389,
+      "bundle_version": "0.38.1",
+      "bundle_short_version": "0.38.1",
+      "outdated": false,
+      "sha256": "2971db2c2220a9f353efcc1d58d8b88462dc5a2a992adea9c051bf6e54c90e52",
+      "artifacts": [
+        {
+          "preflight": null
+        },
+        {
+          "app": [
+            "kitty.app"
+          ]
+        },
+        {
+          "binary": [
+            "/opt/homebrew/Caskroom/kitty/0.38.1/kitty.wrapper.sh",
+            {
+              "target": "kitty"
+            }
+          ]
+        },
+        {
+          "binary": [
+            "/opt/homebrew/Caskroom/kitty/0.38.1/kitten.wrapper.sh",
+            {
+              "target": "kitten"
+            }
+          ]
+        },
+        {
+          "zap": [
+            {
+              "trash": [
+                "~/.config/kitty",
+                "~/Library/Caches/kitty",
+                "~/Library/Preferences/kitty",
+                "~/Library/Preferences/net.kovidgoyal.kitty.plist",
+                "~/Library/Saved Application State/net.kovidgoyal.kitty.savedState"
+              ]
+            }
+          ]
+        }
+      ],
+      "caveats": null,
+      "depends_on": {
+        "macos": {
+          ">=": [
+            "11"
+          ]
+        }
+      },
+      "conflicts_with": {
+        "cask": [
+          "kitty@nightly"
+        ]
+      },
+      "container": null,
+      "auto_updates": null,
+      "deprecated": false,
+      "deprecation_date": null,
+      "deprecation_reason": null,
+      "deprecation_replacement": null,
+      "disabled": false,
+      "disable_date": null,
+      "disable_reason": null,
+      "disable_replacement": null,
+      "tap_git_head": "d99fd0fb2e1ac7ab5878c56769e4f96e1403130c",
+      "languages": [
+
+      ],
+      "ruby_source_path": "Casks/k/kitty.rb",
+      "ruby_source_checksum": {
+        "sha256": "1107b16dc344bace347af11c9b983456f0634cb53103beddbcda6413a10cce4a"
+      }
+    }
+  ]
+}
