@@ -2,6 +2,8 @@
 name = "homebrew"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+authors = ["wxnacy@gmail.com"]
 
 [dependencies]
 tabled = "0.17.0"
