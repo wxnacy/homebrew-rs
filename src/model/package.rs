@@ -46,7 +46,7 @@ pub struct Package {
 impl Package {
     /// 通过 `json` 字符串来新建结构体
     ///
-    /// 仅适用查询单个包时使用，如果反序列多个请用 [`homebrew::Package::from_all`]
+    /// 仅适用查询单个包时使用，如果反序列多个请用 [`Package::from_all`]
     ///
     /// Examples
     ///
@@ -102,7 +102,7 @@ impl Package {
 
     /// 通过 `json` 字符串来新建结构体
     ///
-    /// 仅适用查询多个包时使用，如果反序列单个请用 [`homebrew::Package::from`]
+    /// 仅适用查询多个包时使用，如果反序列单个请用 [`Package::from`]
     ///
     /// Examples
     ///
@@ -130,8 +130,10 @@ impl Package {
     }
 
     /// 判断是否为 `Cask` 包
-    /// TODO: 文档自动跳转方法地址
-    /// 可以在使用 [`homebrew::info`] 方法获取 `Package` 后调用
+    ///
+    /// *获取单个包时可以使用*
+    ///
+    /// 可以在使用 [`crate::info`] 方法获取 `Package` 后调用
     ///
     /// Examples
     ///
