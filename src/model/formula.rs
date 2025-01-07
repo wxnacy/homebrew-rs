@@ -421,7 +421,7 @@ mod tests {
 
     #[test]
     fn test_all_to_formulae() {
-        let tempfile = PathBuf::from("package.json");
+        let tempfile = PathBuf::from("target/package.json");
         if !tempfile.exists() {
             let out = brew::brew("info --eval-all --json=v2").expect("Failed get info all");
             let file = File::create("package.json").expect("Failed to create file");
@@ -446,7 +446,7 @@ mod tests {
                 match pkg_m{
                     Ok(pkg) => assert_eq!(&pkg.name, name),
                     Err(e) => {
-                        fs::write("formula.json", &text).expect("Failed write");
+                        fs::write("target/formula.json", &text).expect("Failed write");
                         println!("{}\n{}", text, name);
                         panic!("{e}")
                     }
