@@ -102,6 +102,7 @@ impl Package {
     }
 
     /// 判断是否为 `Cask` 包
+    /// TODO: 文档自动跳转方法地址
     /// 可以在使用 [`homebrew::info`] 方法获取 `Package` 后调用
     ///
     /// Examples
