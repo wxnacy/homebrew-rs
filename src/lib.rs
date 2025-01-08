@@ -8,3 +8,4 @@ pub use model::package::Package;
 pub use command::info::{info, info_all};
 pub use command::list::{list, list_formulae, list_cask};
 pub use command::cmd::{brew, Brew};
+pub use command::search::search;
