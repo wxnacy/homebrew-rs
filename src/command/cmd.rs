@@ -1,4 +1,4 @@
-use std::{collections::HashMap, ffi::OsStr, process::Command};
+use std::{collections::HashMap, process::Command};
 
 use anyhow::{anyhow, Result};
 
@@ -14,7 +14,9 @@ use crate::config::get_brew_bin;
 /// extern crate homebrew;
 ///
 /// let out = homebrew::Brew::new("--caskroom")
-///     .set_env("HOMEBREW_NO_AUTO_UPDATE", "1")
+///     // .set_env("HOMEBREW_NO_AUTO_UPDATE", "1")
+///     // use set_env_no_auto_update replace
+///     .set_env_no_auto_update()
 ///     .run().unwrap();
 ///
 /// let out2 = homebrew::brew("--caskroom").unwrap();
@@ -22,34 +24,35 @@ use crate::config::get_brew_bin;
 /// assert_eq!(out, out2);
 /// ```
 #[derive(Debug, Clone)]
-pub struct Brew<T>
-where
-    T: AsRef<OsStr> + Clone + Eq + std::hash::Hash,
-{
-    cmd_: T,
-    env_: HashMap<T, T>,
+pub struct Brew {
+    cmd_: String,
+    env_: HashMap<String, String>,
 }
-impl<T> Brew<T>
-where
-    T: AsRef<OsStr> + Clone + Eq + std::hash::Hash,
-{
+
+impl Brew {
     /// 新建一个 `brew` 命令构造器
-    pub fn new(cmd_: T) -> Self {
-        let env_ = HashMap::new();
-        Self { cmd_, env_ }
+    pub fn new<T: AsRef<str>>(cmd: T) -> Self {
+        Self {
+            cmd_: cmd.as_ref().to_string(),
+            env_: HashMap::new(),
+        }
     }
 
     /// 添加环境变量
-    pub fn set_env(&mut self, key: T, value: T) -> &mut Self {
-        self.env_.insert(key, value);
+    pub fn set_env<K: AsRef<str>, V: AsRef<str>>(&mut self, key: K, value: V) -> &mut Self{
+        self.env_.insert(key.as_ref().to_string(), value.as_ref().to_string());
         self
+    }
+
+    /// 添加环境变量 HOMEBREW_NO_AUTO_UPDATE=1
+    pub fn set_env_no_auto_update(&mut self) -> &mut Self {
+        self.set_env("HOMEBREW_NO_AUTO_UPDATE", "1")
     }
 
     /// 运行构造的 `brew` 命令
     pub fn run(&self) -> Result<String> {
         let bin = get_brew_bin()?;
-        let cmd_str = self.cmd_.as_ref().to_string_lossy();
-        let cmds = cmd_str.split(' ');
+        let cmds = self.cmd_.split(' ');
         let output = Command::new(bin)
             .args(cmds)
             .envs(&self.env_)
