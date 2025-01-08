@@ -1,3 +1,3 @@
 pub mod list;
-pub mod brew;
+pub mod cmd;
 pub mod info;

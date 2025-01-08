@@ -1,7 +1,7 @@
 
 use anyhow::Result;
 
-use crate::brew::brew::brew;
+use crate::brew;
 
 /// 列举出 `brew` 安装的包列表，包含 `Cask` 和 `Formulae`
 pub fn list() -> Result<Vec<String>> {
