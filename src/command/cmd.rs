@@ -26,11 +26,27 @@ use crate::config::get_brew_bin;
 ///
 /// Examples
 ///
+/// use `output_vec()`
+///
 /// ```
 /// extern crate homebrew;
 ///
 /// let out = homebrew::Brew::new("search wget")
 ///     .set_env_no_auto_update()
+///     .output_vec().unwrap();
+///
+/// assert_eq!(out, ["wget", "wget2", "wgetpaste"]);
+/// ```
+///
+/// Examples
+///
+/// use `default()`
+///
+/// ```
+/// extern crate homebrew;
+///
+/// let out = homebrew::Brew::default()
+///     .set_cmd("search wget")
 ///     .output_vec().unwrap();
 ///
 /// assert_eq!(out, ["wget", "wget2", "wgetpaste"]);
@@ -41,6 +57,18 @@ pub struct Brew {
     env_: HashMap<String, String>,
 }
 
+impl Default for Brew {
+    /// 给一个默认的 `Brew` 会自动设置环境变量等信息
+    fn default() -> Self{
+        let mut e = HashMap::new();
+        e.insert("HOMEBREW_NO_AUTO_UPDATE".to_string(), "1".to_string());
+        Self {
+            cmd_: String::new(),
+            env_: e,
+        }
+    }
+}
+
 impl Brew {
     /// 新建一个 `brew` 命令构造器
     pub fn new<T: AsRef<str>>(cmd: T) -> Self {
@@ -48,6 +76,12 @@ impl Brew {
             cmd_: cmd.as_ref().to_string(),
             env_: HashMap::new(),
         }
+    }
+
+    /// 设置命令
+    pub fn set_cmd<S: AsRef<str>>(&mut self, cmd: S) -> &mut Self{
+        self.cmd_ = cmd.as_ref().to_string();
+        self
     }
 
     /// 添加环境变量
