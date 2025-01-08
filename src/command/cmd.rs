@@ -17,11 +17,23 @@ use crate::config::get_brew_bin;
 ///     // .set_env("HOMEBREW_NO_AUTO_UPDATE", "1")
 ///     // use set_env_no_auto_update replace
 ///     .set_env_no_auto_update()
-///     .run().unwrap();
+///     .output().unwrap();
 ///
 /// let out2 = homebrew::brew("--caskroom").unwrap();
 ///
 /// assert_eq!(out, out2);
+/// ```
+///
+/// Examples
+///
+/// ```
+/// extern crate homebrew;
+///
+/// let out = homebrew::Brew::new("search wget")
+///     .set_env_no_auto_update()
+///     .output_vec().unwrap();
+///
+/// assert_eq!(out, ["wget", "wget2", "wgetpaste"]);
 /// ```
 #[derive(Debug, Clone)]
 pub struct Brew {
@@ -49,8 +61,8 @@ impl Brew {
         self.set_env("HOMEBREW_NO_AUTO_UPDATE", "1")
     }
 
-    /// 运行构造的 `brew` 命令
-    pub fn run(&self) -> Result<String> {
+    /// 返回 `brew` 命令并得到 [`String`] 类型数据
+    pub fn output(&self) -> Result<String> {
         let bin = get_brew_bin()?;
         let cmds = self.cmd_.split(' ');
         let output = Command::new(bin)
@@ -71,6 +83,16 @@ impl Brew {
             return Ok(o.to_string());
         }
         Ok(out.to_string())
+    }
+
+    /// 返回 `brew` 命令并得到 [`Vec<String>`] 数据
+    pub fn output_vec(&self) -> Result<Vec<String>> {
+        let out = self.output()?;
+        let res: Vec<String> = out.split('\n')
+            .filter(|s| !s.is_empty())
+            .map(|s| s.to_string())
+            .collect();
+        Ok(res)
     }
 }
 
@@ -93,5 +115,5 @@ impl Brew {
 pub fn brew(cmd: &str) -> Result<String> {
     Brew::new(cmd)
         .set_env("HOMEBREW_NO_AUTO_UPDATE", "1")
-        .run()
+        .output()
 }
