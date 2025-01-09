@@ -15,6 +15,9 @@
   - [run](#run)
   - [kill](#kill)
   - [cleanup](#cleanup)
+- [update](#update)
+- [install](#install)
+- [uninstall](#uninstall)
 
 ## 安装
 
@@ -485,4 +488,74 @@ use homebrew;
 
 let out = homebrew::services_cleanup().unwrap();
 println!("{out}")
+```
+
+### update
+
+执行完在输出结果
+
+```rust
+use homebrew;
+
+let out = homebrew::update().unwrap();
+println!("{out}")
+```
+
+实时输出结果
+
+```rust
+use homebrew;
+
+homebrew::update_spawn().unwrap();
+```
+
+```bash
+HOMEBREW_BREW_GIT_REMOTE set: using https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git as the Homebrew/brew Git remote.
+==> Updating Homebrew...
+Already up-to-date.
+```
+
+### install
+
+执行完在输出结果
+
+```rust
+use homebrew;
+
+let out = homebrew::install("gotop").unwrap();
+println!("{out}")
+```
+
+实时输出结果
+
+```rust
+use homebrew;
+
+homebrew::install_spawn("gotop").unwrap();
+```
+
+```bash
+==> Fetching gotop
+==> Downloading https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/gotop-4.2.0.arm64_sequoia.bottle.tar.gz
+Already downloaded: /Users/wxnacy/Library/Caches/Homebrew/downloads/44c51f808e5d60cecddb47b1a8d92b36027b60dfe85314dade7b9de690d8e8ce--gotop-4.2.0.arm64_sequoia.bottle.tar.gz
+==> Pouring gotop-4.2.0.arm64_sequoia.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/gotop/4.2.0: 7 files, 10.7MB
+==> Running `brew cleanup gotop`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+```
+
+### uninstall
+
+执行完在输出结果
+
+```rust
+use homebrew;
+
+let out = homebrew::uninstall("gotop").unwrap();
+println!("{out}")
+```
+
+```bash
+Uninstalling /opt/homebrew/Cellar/gotop/4.2.0... (7 files, 10.7MB)
 ```
