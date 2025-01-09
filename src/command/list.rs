@@ -1,36 +1,27 @@
 
 use anyhow::Result;
 
-use crate::brew;
+use crate::Brew;
 
 /// 列举出 `brew` 安装的包列表，包含 `Cask` 和 `Formulae`
 pub fn list() -> Result<Vec<String>> {
-    let out = brew("list")?;
-    let res: Vec<String> = out.split('\n')
-        .filter(|s| !s.is_empty())
-        .map(|s| s.to_string())
-        .collect();
-    Ok(res)
+    Brew::default()
+        .set_cmd("list")
+        .output_vec()
 }
 
 /// 列举出 `brew` 安装的包列表，只包含 `Cask`
 pub fn list_cask() -> Result<Vec<String>> {
-    let out = brew("list --cask")?;
-    let res: Vec<String> = out.split('\n')
-        .filter(|s| !s.is_empty())
-        .map(|s| s.to_string())
-        .collect();
-    Ok(res)
+    Brew::default()
+        .set_cmd("list --cask")
+        .output_vec()
 }
 
 /// 列举出 `brew` 安装的包列表，只包含 `Formulae`
 pub fn list_formulae() -> Result<Vec<String>> {
-    let out = brew("list --formulae")?;
-    let res: Vec<String> = out.split('\n')
-        .filter(|s| !s.is_empty())
-        .map(|s| s.to_string())
-        .collect();
-    Ok(res)
+    Brew::default()
+        .set_cmd("list --formula")
+        .output_vec()
 }
 
 #[cfg(test)]
