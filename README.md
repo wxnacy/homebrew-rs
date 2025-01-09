@@ -2,6 +2,26 @@
 
 [Homebrew](https://brew.sh/) 在 [Rust](https://www.rust-lang.org/) 中的封装
 
+* [安装](#安装)
+* [使用](#使用)
++ [info](#info)
+    - [--eval-all](#--eval-all)
++ [services](#services)
+    - [list](#list)
+    - [info](#info-1)
+    - [stop](#stop)
+    - [start](#start)
+    - [restart](#restart)
+    - [run](#run)
+    - [kill](#kill)
+    - [cleanup](#cleanup)
+
+## 安装
+
+```bash
+cargo add homebrew
+```
+
 ## 使用
 
 通过 [examples](https://github.com/wxnacy/homebrew-rs/tree/master/examples) 来了解 homebrew-rs 的使用
