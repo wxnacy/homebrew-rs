@@ -2,19 +2,19 @@
 
 [Homebrew](https://brew.sh/) 在 [Rust](https://www.rust-lang.org/) 中的封装
 
-* [安装](#安装)
-* [使用](#使用)
-+ [info](#info)
-    - [--eval-all](#--eval-all)
-+ [services](#services)
-    - [list](#list)
-    - [info](#info-1)
-    - [stop](#stop)
-    - [start](#start)
-    - [restart](#restart)
-    - [run](#run)
-    - [kill](#kill)
-    - [cleanup](#cleanup)
+- [安装](#安装)
+- [使用](#使用)
+- [info](#info)
+  - [--eval-all](#--eval-all)
+- [services](#services)
+  - [list](#list)
+  - [info](#info-1)
+  - [stop](#stop)
+  - [start](#start)
+  - [restart](#restart)
+  - [run](#run)
+  - [kill](#kill)
+  - [cleanup](#cleanup)
 
 ## 安装
 
@@ -394,7 +394,7 @@ ServiceInfo {
 
 停止服务并注销自启动，就像运行 `brew services stop [name]`
 
-*确保你的机器上已经安装 mpd，或者其他可以启动的服务*
+__确保你的机器上已经安装 mpd，或者其他可以启动的服务__
 
 ```rust
 use homebrew;
@@ -412,7 +412,7 @@ Stopping `mpd`... (might take a while)
 
 启动服务并注册自启动，就像运行 `brew services start [name]`
 
-*确保你的机器上已经安装 mpd，或者其他可以启动的服务*
+__确保你的机器上已经安装 mpd，或者其他可以启动的服务__
 
 ```rust
 use homebrew;
@@ -429,7 +429,7 @@ println!("{out}")
 
 重启服务并注册自启动，就像运行 `brew services restart [name]`
 
-*确保你的机器上已经安装 mpd，或者其他可以启动的服务*
+__确保你的机器上已经安装 mpd，或者其他可以启动的服务__
 
 ```rust
 use homebrew;
@@ -448,7 +448,7 @@ Stopping `mpd`... (might take a while)
 
 启动服务但不注册自启动，就像运行 `brew services run [name]`
 
-*确保你的机器上已经安装 mpd，或者其他可以启动的服务*
+__确保你的机器上已经安装 mpd，或者其他可以启动的服务__
 
 ```rust
 use homebrew;
@@ -465,7 +465,7 @@ println!("{out}")
 
 终止服务但保持自启动，就像运行 `brew services kill [name]`
 
-*确保你的机器上已经安装 mpd，或者其他可以启动的服务*
+__确保你的机器上已经安装 mpd，或者其他可以启动的服务__
 
 ```rust
 use homebrew;
@@ -478,7 +478,7 @@ println!("{out}")
 
 移除所有没用的服务，就像运行 `brew services cleanup`
 
-*确保你的机器上已经安装 mpd，或者其他可以启动的服务*
+__确保你的机器上已经安装 mpd，或者其他可以启动的服务__
 
 ```rust
 use homebrew;
