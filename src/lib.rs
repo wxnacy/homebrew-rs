@@ -8,7 +8,14 @@ pub use model::package::Package;
 pub use model::service::{Service, ServiceInfo, ServiceStatus};
 pub use command::info::{info, info_all};
 pub use command::list::{list, list_formulae, list_cask};
-pub use command::cmd::{brew, Brew};
+pub use command::cmd::{brew, Brew, brew_spawn};
+pub use command::install::{
+    update,
+    update_spawn,
+    install,
+    install_spawn,
+    uninstall,
+};
 pub use command::search::search;
 pub use command::service::{
     services,
