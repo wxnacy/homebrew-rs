@@ -74,6 +74,7 @@ impl Service {
     }
 }
 
+/// 具体服务详情结构体
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ServiceInfo {
     pub name: String,
