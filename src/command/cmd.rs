@@ -1,4 +1,5 @@
-use std::{collections::HashMap, process::Command};
+use std::{collections::HashMap, process::{Child, Command, Stdio}};
+use std::io::{self, BufRead};
 
 use anyhow::{anyhow, Result};
 
@@ -128,6 +129,46 @@ impl Brew {
             .collect();
         Ok(res)
     }
+
+    /// 实时打印命令信息，但是不会返回结果
+    ///
+    /// Examples
+    ///
+    /// ```
+    /// extern crate homebrew;
+    ///
+    /// homebrew::Brew::new("update").spawn.unwrap();
+    /// ```
+    ///
+    /// ```bash
+    /// HOMEBREW_BREW_GIT_REMOTE set: using https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git as the Homebrew/brew Git remote.
+    /// ==> Updating Homebrew...
+    /// Already up-to-date.
+    /// ```
+    pub fn spawn(&self) -> Result<()> {
+        let bin = get_brew_bin()?;
+        let cmds = self.cmd_.split(' ');
+        let mut child: Child = Command::new(bin)
+            .args(cmds)
+            .stdout(Stdio::piped()) // 将标准输出设置为管道
+            .spawn()?; // 启动命令
+
+        // 获取标准输出的句柄
+        let stdout = child.stdout.take().ok_or_else(|| anyhow!("Could not capture standard output"))?;
+
+        // 创建一个 BufReader 来逐行读取输出
+        let reader = io::BufReader::new(stdout);
+
+        // 逐行读取输出并打印
+        for line in reader.lines() {
+            let line = line?;
+            println!("{}", line);
+        }
+
+        // 等待命令完成
+        let _ = child.wait()?;
+        Ok(())
+    }
 }
 
 /// 执行 `brew` 命令
@@ -148,6 +189,31 @@ impl Brew {
 /// ```
 pub fn brew(cmd: &str) -> Result<String> {
     Brew::new(cmd)
-        .set_env("HOMEBREW_NO_AUTO_UPDATE", "1")
+        .set_env_no_auto_update()
         .output()
+}
+
+/// 执行 `brew` 命令并实时输出信息
+///
+/// 默认添加环境变量 HOMEBREW_NO_AUTO_UPDATE=1
+///
+/// 如果想要更复杂的构造执行器，请使用 [`Brew`]
+///
+/// Examples
+///
+/// ```ignore
+/// extern crate homebrew;
+///
+/// homebrew::brew_spawn("update")?;
+/// ```
+///
+/// ```bash
+/// HOMEBREW_BREW_GIT_REMOTE set: using https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git as the Homebrew/brew Git remote.
+/// ==> Updating Homebrew...
+/// Already up-to-date.
+/// ```
+pub fn brew_spawn(cmd: &str) -> Result<()> {
+    Brew::new(cmd)
+        .set_env_no_auto_update()
+        .spawn()
 }
