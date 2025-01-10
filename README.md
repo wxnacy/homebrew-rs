@@ -18,6 +18,8 @@
 - [update](#update)
 - [install](#install)
 - [uninstall](#uninstall)
+- [upgrade](#upgrade)
+- [reinstall](#reinstall)
 
 ## 安装
 
@@ -594,4 +596,35 @@ Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
 Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
 Removing: /opt/homebrew/Cellar/superfile/1.1.6... (7 files, 19.3MB)
 Removing: /Users/wxnacy/Library/Caches/Homebrew/superfile--1.1.6.arm64_sequoia.bottle.tar.gz... (6.3MB)
+```
+
+### reinstall
+
+执行完在输出结果
+
+```rust
+use homebrew;
+
+let out = homebrew::reinstall("gtop").unwrap();
+println!("{out}")
+```
+
+实时输出结果
+
+```rust
+use homebrew;
+
+homebrew::reinstall_spawn("gtop").unwrap();
+```
+
+```bash
+==> Fetching gtop
+==> Downloading https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/gtop-1.1.5.arm64_sequoia.bottle.1.tar.gz
+Already downloaded: /Users/wxnacy/Library/Caches/Homebrew/downloads/eaf8475135f08001cc1e02022d76c5bc9fb1ab26d4be2a89e9bf1d738eb86b8e--gtop-1.1.5.arm64_sequoia.bottle.1.tar.gz
+==> Reinstalling gtop
+==> Pouring gtop-1.1.5.arm64_sequoia.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/gtop/1.1.5: 1,872 files, 11.7MB
+==> Running `brew cleanup gtop`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
 ```
