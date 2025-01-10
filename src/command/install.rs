@@ -64,6 +64,36 @@ pub fn install_spawn(name: &str) -> Result<()> {
     brew_spawn(format!("install {name}").as_str())
 }
 
+/// 安装 `Cask` 软件 `brew install --cask [name]` 命令
+///
+/// 在执行结束后返回结果，如果想实时输出请用 [`install_cask_spawn`]
+///
+/// Examples
+///
+/// ```ignore
+/// use homebrew;
+///
+/// homebrew::install_cask("kitty").unwrap();
+/// ```
+pub fn install_cask(name: &str) -> Result<String> {
+    brew(format!("install --cask {name}").as_str())
+}
+
+/// 安装 `Cask` 软件 `brew install --cask [name]` 命令，并实时输出
+///
+/// 实时输出信息，如果想等执行完再拿结果请用 [`install_cask`]
+///
+/// Examples
+///
+/// ```ignore
+/// use homebrew;
+///
+/// homebrew::install_cask_spawn("kitty").unwrap();
+/// ```
+pub fn install_cask_spawn(name: &str) -> Result<()> {
+    brew_spawn(format!("install --cask {name}").as_str())
+}
+
 /// 重新安装软件 `brew reinstall [name]` 命令
 ///
 /// 在执行结束后返回结果，如果想实时输出请用 [`reinstall_spawn`]

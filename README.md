@@ -17,6 +17,7 @@
   - [cleanup](#cleanup)
 - [update](#update)
 - [install](#install)
+  - [--cask](#--cask)
 - [uninstall](#uninstall)
 - [upgrade](#upgrade)
 - [reinstall](#reinstall)
@@ -547,6 +548,32 @@ Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
 Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
 ```
 
+#### --cask
+
+执行完在输出结果
+
+```rust
+use homebrew;
+
+let out = homebrew::install_cask("kitty").unwrap();
+println!("{out}")
+```
+
+实时输出结果
+
+```rust
+use homebrew;
+
+homebrew::install_cask_spawn("kitty").unwrap();
+```
+
+```bash
+==> Downloading https://github.com/keycastr/keycastr/releases/download/v0.10.2/KeyCastr.app.zip
+Already downloaded: /Users/wxnacy/Library/Caches/Homebrew/downloads/5922fdb78b047a1dc34313507721add8fd17e61928cdcb92c0039b599098ca38--KeyCastr.app.zip
+==> Installing Cask keycastr
+==> Moving App 'KeyCastr.app' to '/Applications/KeyCastr.app'
+```
+
 ### uninstall
 
 执行完在输出结果
@@ -628,3 +655,4 @@ Already downloaded: /Users/wxnacy/Library/Caches/Homebrew/downloads/eaf8475135f0
 Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
 Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
 ```
+

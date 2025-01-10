@@ -15,6 +15,8 @@ pub use command::install::{
     update_spawn,
     install,
     install_spawn,
+    install_cask,
+    install_cask_spawn,
     uninstall,
     upgrade,
     upgrade_spawn,
