@@ -92,6 +92,8 @@ impl Brew {
     }
 
     /// 添加环境变量 HOMEBREW_NO_AUTO_UPDATE=1
+    ///
+    /// 更多环境变量可以通过 [`Brew::set_env`] 设置
     pub fn set_env_no_auto_update(&mut self) -> &mut Self {
         self.set_env("HOMEBREW_NO_AUTO_UPDATE", "1")
     }
