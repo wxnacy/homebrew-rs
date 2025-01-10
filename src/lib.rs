@@ -18,6 +18,8 @@ pub use command::install::{
     uninstall,
     upgrade,
     upgrade_spawn,
+    reinstall,
+    reinstall_spawn,
 };
 pub use command::search::search;
 pub use command::service::{

@@ -64,6 +64,36 @@ pub fn install_spawn(name: &str) -> Result<()> {
     brew_spawn(format!("install {name}").as_str())
 }
 
+/// 重新安装软件 `brew reinstall [name]` 命令
+///
+/// 在执行结束后返回结果，如果想实时输出请用 [`reinstall_spawn`]
+///
+/// Examples
+///
+/// ```ignore
+/// use homebrew;
+///
+/// homebrew::reinstall("btop").unwrap();
+/// ```
+pub fn reinstall(name: &str) -> Result<String> {
+    brew(format!("reinstall {name}").as_str())
+}
+
+/// 重新安装软件 `brew reinstall [name]` 命令，并实时输出
+///
+/// 实时输出信息，如果想等执行完再拿结果请用 [`reinstall`]
+///
+/// Examples
+///
+/// ```ignore
+/// use homebrew;
+///
+/// homebrew::reinstall_spawn("btop").unwrap();
+/// ```
+pub fn reinstall_spawn(name: &str) -> Result<()> {
+    brew_spawn(format!("reinstall {name}").as_str())
+}
+
 /// 卸载软件 `brew uninstall [name]` 命令
 ///
 /// Examples
