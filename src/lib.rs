@@ -15,6 +15,8 @@ pub use command::install::{
     install,
     install_spawn,
     uninstall,
+    upgrade,
+    upgrade_spawn,
 };
 pub use command::search::search;
 pub use command::service::{

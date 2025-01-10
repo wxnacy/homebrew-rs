@@ -78,3 +78,33 @@ pub fn install_spawn(name: &str) -> Result<()> {
 pub fn uninstall(name: &str) -> Result<String> {
     brew(format!("uninstall {name}").as_str())
 }
+
+/// 升级软件 `brew upgrade [name]` 命令
+///
+/// 在执行结束后返回结果，如果想实时输出请用 [`upgrade_spawn`]
+///
+/// Examples
+///
+/// ```ignore
+/// use homebrew;
+///
+/// homebrew::upgrade("btop").unwrap();
+/// ```
+pub fn upgrade(name: &str) -> Result<String> {
+    brew(format!("upgrade {name}").as_str())
+}
+
+/// 升级软件 `brew upgrade [name]` 命令，并实时输出
+///
+/// 实时输出信息，如果想等执行完再拿结果请用 [`upgrade`]
+///
+/// Examples
+///
+/// ```ignore
+/// use homebrew;
+///
+/// homebrew::upgrade_spawn("btop").unwrap();
+/// ```
+pub fn upgrade_spawn(name: &str) -> Result<()> {
+    brew_spawn(format!("upgrade {name}").as_str())
+}

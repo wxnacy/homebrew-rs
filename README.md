@@ -559,3 +559,39 @@ println!("{out}")
 ```bash
 Uninstalling /opt/homebrew/Cellar/gotop/4.2.0... (7 files, 10.7MB)
 ```
+
+### upgrade
+
+执行完在输出结果
+
+```rust
+use homebrew;
+
+let out = homebrew::upgrade("superfile").unwrap();
+println!("{out}")
+```
+
+实时输出结果
+
+```rust
+use homebrew;
+
+homebrew::upgrade_spawn("superfile").unwrap();
+```
+
+```bash
+==> Upgrading 1 outdated package:
+superfile 1.1.6 -> 1.1.7.1
+==> Fetching superfile
+==> Downloading https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/superfile-1.1.7.1.arm64_sequoia.bottle.tar.gz
+############################################################################################################ 100.0%
+==> Upgrading superfile
+  1.1.6 -> 1.1.7.1
+==> Pouring superfile-1.1.7.1.arm64_sequoia.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/superfile/1.1.7.1: 7 files, 19.3MB
+==> Running `brew cleanup superfile`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+Removing: /opt/homebrew/Cellar/superfile/1.1.6... (7 files, 19.3MB)
+Removing: /Users/wxnacy/Library/Caches/Homebrew/superfile--1.1.6.arm64_sequoia.bottle.tar.gz... (6.3MB)
+```
