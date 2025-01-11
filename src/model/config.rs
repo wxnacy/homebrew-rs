@@ -137,7 +137,7 @@ impl Config {
     /// assert_eq!(config.api_domain, "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api");
     /// assert_eq!(config.bottle_domain, "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles");
     /// assert_eq!(config.brew_git_remote, "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git");
-    /// // assert_eq!(config.cask_opts, Vec::<String>::new());
+    /// assert_eq!(config.cask_opts, Vec::<String>::new());
     /// assert_eq!(config.core_git_remote, "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git");
     /// assert_eq!(config.editor, "nvim");
     /// assert_eq!(config.make_jobs, 12);

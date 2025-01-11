@@ -1,4 +1,6 @@
 //! 暂时只实现了 `brew` 基础命令，更多命令可以通过 [`Brew`] 构造实现
+//!
+//! 命令执行前均默认设置环境变量 `HOMEBREW_NO_AUTO_UPDATE=1` 但 `update()` 除外
 mod model;
 mod config;
 mod command;
