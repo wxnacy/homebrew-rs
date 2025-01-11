@@ -21,6 +21,7 @@
 - [uninstall](#uninstall)
 - [upgrade](#upgrade)
 - [reinstall](#reinstall)
+- [config](#config)
 
 ## 安装
 
@@ -656,3 +657,44 @@ Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
 Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
 ```
 
+### config
+
+执行完在输出结果
+
+```rust
+use homebrew;
+
+let cfg = homebrew::config().unwrap();
+println!("{cfg:#?}")
+```
+
+```bash
+Config {
+    version: "4.4.15-56-g6aac197",
+    origin: "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git",
+    head: "6aac197d556f60e82490dcb46fcbe7090c8934e9",
+    last_commit: "2 days ago",
+    branch: "master",
+    core_tap_json: "10 Jan 14:49 UTC",
+    core_cask_tap_json: "10 Jan 14:49 UTC",
+    prefix: "/opt/homebrew",
+    api_domain: "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api",
+    bottle_domain: "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles",
+    brew_git_remote: "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git",
+    cask_opts: [],
+    core_git_remote: "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git",
+    editor: "nvim",
+    make_jobs: 12,
+    pip_index_url: "https://pypi.tuna.tsinghua.edu.cn/simple",
+    sorbet_runtime: "set",
+    ruby: "3.3.6 => /opt/homebrew/Library/Homebrew/vendor/portable-ruby/3.3.6/bin/ruby",
+    cpu: "dodeca-core 64-bit arm_brava",
+    clang: "16.0.0 build 1600",
+    git: "2.47.1 => /opt/homebrew/bin/git",
+    curl: "8.7.1 => /usr/bin/curl",
+    macos: "15.1-arm64",
+    clt: "16.2.0.0.1.1733547573",
+    xcode: "N/A",
+    rosetta2: false,
+}
+```
