@@ -56,7 +56,7 @@ pub fn services_info(name: &str) -> anyhow::Result<ServiceInfo>{
 ///
 /// Examples
 ///
-/// ```
+/// ```ignore
 /// use homebrew;
 ///
 /// // 确保你的机器上已经安装 mpd
@@ -80,7 +80,7 @@ pub fn services_start(name: &str) -> anyhow::Result<String>{
 ///
 /// Examples
 ///
-/// ```
+/// ```ignore
 /// use homebrew;
 ///
 /// // 确保你的机器上已经安装 mpd
@@ -104,7 +104,7 @@ pub fn services_run(name: &str) -> anyhow::Result<String>{
 ///
 /// Examples
 ///
-/// ```
+/// ```ignore
 /// use homebrew;
 /// use homebrew::ServiceStatus;
 ///
@@ -128,7 +128,7 @@ pub fn services_stop(name: &str) -> anyhow::Result<String>{
 ///
 /// Examples
 ///
-/// ```
+/// ```ignore
 /// use homebrew;
 /// use homebrew::ServiceStatus;
 ///

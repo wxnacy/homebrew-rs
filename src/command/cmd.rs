@@ -136,7 +136,7 @@ impl Brew {
     ///
     /// Examples
     ///
-    /// ```
+    /// ```ignore
     /// extern crate homebrew;
     ///
     /// homebrew::Brew::new("update").spawn.unwrap();
