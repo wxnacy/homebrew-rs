@@ -7,13 +7,23 @@ mod command;
 
 pub use model::formula::Formula;
 pub use model::cask::Cask;
-pub use model::config::Config;
+pub use model::config::{Config, Env};
 pub use model::package::Package;
 pub use model::service::{Service, ServiceInfo, ServiceStatus};
 pub use command::info::{info, info_all};
 pub use command::list::{list, list_formulae, list_cask};
 pub use command::cmd::{brew, Brew, brew_spawn};
-pub use command::config::config;
+pub use command::config::{
+    caskroom,
+    cache,
+    cellar,
+    config,
+    env,
+    env_shell,
+    version,
+    repository,
+    prefix,
+};
 pub use command::install::{
     update,
     update_spawn,

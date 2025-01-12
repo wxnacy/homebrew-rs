@@ -169,6 +169,99 @@ impl Config {
     }
 }
 
+#[derive(Debug, Default, Serialize, Deserialize, Clone)]
+pub struct Env {
+    #[serde(rename = "HOMEBREW_CC")]
+    pub cc: String,
+
+    #[serde(rename = "HOMEBREW_CXX")]
+    pub cxx: String,
+
+    #[serde(rename = "MAKEFLAGS")]
+    pub makeflags: String,
+
+    #[serde(rename = "CMAKE_PREFIX_PATH")]
+    pub cmake_prefix_path: String,
+
+    #[serde(rename = "CMAKE_INCLUDE_PATH")]
+    pub cmake_include_path: String,
+
+    #[serde(rename = "CMAKE_LIBRARY_PATH")]
+    pub cmake_library_path: String,
+
+    #[serde(rename = "PKG_CONFIG_LIBDIR")]
+    pub pkg_config_libdir: String,
+
+    #[serde(rename = "HOMEBREW_MAKE_JOBS", deserialize_with = "deserialize_u32")]
+    pub make_jobs: u32,
+
+    #[serde(rename = "HOMEBREW_GIT")]
+    pub git: String,
+
+    #[serde(rename = "HOMEBREW_SDKROOT")]
+    pub sdkroot: String,
+
+    #[serde(rename = "ACLOCAL_PATH")]
+    pub aclocal_path: String,
+
+    #[serde(rename = "PATH")]
+    pub path: String,
+}
+
+impl Env {
+    ///
+    /// Creates an `Env` instance from a given string slice.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use homebrew;
+    ///
+    /// let text = r#"
+    /// HOMEBREW_CC: clang
+    /// HOMEBREW_CXX: clang++
+    /// MAKEFLAGS: -j12
+    /// CMAKE_PREFIX_PATH: /opt/homebrew
+    /// CMAKE_INCLUDE_PATH: /Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/System/Library/Frameworks/OpenGL.framework/Versions/Current/Headers
+    /// CMAKE_LIBRARY_PATH: /Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries
+    /// PKG_CONFIG_LIBDIR: /usr/lib/pkgconfig:/opt/homebrew/Library/Homebrew/os/mac/pkgconfig/15
+    /// HOMEBREW_MAKE_JOBS: 12
+    /// HOMEBREW_GIT: git
+    /// HOMEBREW_SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk
+    /// ACLOCAL_PATH: /opt/homebrew/share/aclocal
+    /// PATH: /opt/homebrew/Library/Homebrew/shims/mac/super:/usr/bin:/bin:/usr/sbin:/sbin
+    /// "#;
+    ///
+    /// let env = homebrew::Env::from(text).unwrap();
+    ///
+    /// assert_eq!(env.cc, "clang");
+    /// assert_eq!(env.cxx, "clang++");
+    /// assert_eq!(env.makeflags, "-j12");
+    /// assert_eq!(env.cmake_prefix_path, "/opt/homebrew");
+    /// assert_eq!(env.cmake_include_path, "/Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/System/Library/Frameworks/OpenGL.framework/Versions/Current/Headers");
+    /// assert_eq!(env.cmake_library_path, "/Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries");
+    /// assert_eq!(env.pkg_config_libdir, "/usr/lib/pkgconfig:/opt/homebrew/Library/Homebrew/os/mac/pkgconfig/15");
+    /// assert_eq!(env.make_jobs, 12);
+    /// assert_eq!(env.git, "git");
+    /// assert_eq!(env.sdkroot, "/Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk");
+    /// assert_eq!(env.aclocal_path, "/opt/homebrew/share/aclocal");
+    /// assert_eq!(env.path, "/opt/homebrew/Library/Homebrew/shims/mac/super:/usr/bin:/bin:/usr/sbin:/sbin");
+    /// ```
+    pub fn from(text: &str) -> anyhow::Result<Self> {
+        let text = text.strip_prefix("\n").unwrap_or(text);
+        let text = text.strip_suffix("\n").unwrap_or(text);
+        let mut data: HashMap<String, Value> = HashMap::new();
+        for line in text.split("\n") {
+            let kv: Vec<String> = line.split(": ").map(String::from).collect();
+            data.insert(kv[0].clone(), Value::String(kv[1].clone()));
+        }
+
+        let env: Self = serde_json::from_value(serde_json::to_value(&data)?)?;
+
+        Ok(env)
+    }
+}
+
 
 /// 反序列化 u32 类型
 fn deserialize_u32<'de, D>(deserializer: D) -> Result<u32, D::Error>
